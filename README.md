@@ -16,6 +16,8 @@ An AI-powered legal document analysis system built using RAG (Retrieval-Augmente
             Victim details
             
             Place of occurrence
+
+            Judgment details
             
   📚 Automatic case summarization
   
