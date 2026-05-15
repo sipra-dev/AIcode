@@ -31,6 +31,7 @@ An AI-powered legal document analysis system built using RAG (Retrieval-Augmente
   PDF Upload → Text Extraction → Chunking → Embedding → FAISS Retrieval → Reranking → LLM Processing → Structured Output
 
 📌 How It Works
+
   User uploads a legal PDF
   Text is extracted and split into chunks
   Chunks are stored in FAISS vector database
