@@ -18,10 +18,7 @@ from langchain_core.embeddings import Embeddings
 
 from sentence_transformers import SentenceTransformer, util
 
-
-# ==========================================
 # LOAD ENV
-# ==========================================
 
 load_dotenv()
 
@@ -30,9 +27,9 @@ client = OpenAI(
 )
 
 
-# ==========================================
+
 # LLM FUNCTIONS
-# ==========================================
+
 
 def call_llm(
     system_prompt,
@@ -80,9 +77,9 @@ def gpt41(system_prompt, user_prompt):
     )
 
 
-# ==========================================
+
 # EMBEDDINGS
-# ==========================================
+
 
 class OpenAIEmbeddings(Embeddings):
 
@@ -109,32 +106,32 @@ class OpenAIEmbeddings(Embeddings):
         return embeddings
 
 
-# ==========================================
+
 # RERANKER MODEL
-# ==========================================
+
 
 reranker_model = SentenceTransformer(
     "BAAI/bge-base-en-v1.5"
 )
 
 
-# ==========================================
+
 # MAIN PIPELINE
-# ==========================================
+
 
 def build_pipeline(pdf_path):
 
-    # ======================================
+    
     # LOAD PDF
-    # ======================================
+    
 
     loader = PyPDFLoader(pdf_path)
 
     docs = loader.load()
 
-    # ======================================
+    
     # SPLIT TEXT
-    # ======================================
+
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=600,
@@ -143,9 +140,9 @@ def build_pipeline(pdf_path):
 
     chunks = splitter.split_documents(docs)
 
-    # ======================================
+    
     # VECTOR STORE
-    # ======================================
+    
 
     embedding = OpenAIEmbeddings()
 
@@ -154,9 +151,9 @@ def build_pipeline(pdf_path):
         embedding=embedding
     )
 
-    # ======================================
+    
     # RERANK FUNCTION
-    # ======================================
+    
 
     def rerank(query, docs, top_k=4):
 
@@ -185,9 +182,9 @@ def build_pipeline(pdf_path):
 
         return [text for text, _ in ranked[:top_k]]
 
-    # ======================================
+    
     # RETRIEVE FUNCTION
-    # ======================================
+    
 
     def retrieve(query, k=12):
 
@@ -204,9 +201,9 @@ def build_pipeline(pdf_path):
 
         return reranked_chunks
 
-    # ======================================
+    
     # FIELD EXTRACTION
-    # ======================================
+    
 
     def process_field(query):
 
@@ -245,9 +242,9 @@ Context:
 
             return f"Error: {str(e)}"
 
-    # ======================================
+    
     # SUMMARY
-    # ======================================
+    
 
     def process_summary():
 
@@ -281,9 +278,9 @@ Context:
 
             return f"Error: {str(e)}"
 
-    # ======================================
+    
     # JUDGEMENT
-    # ======================================
+    
 
     def process_judgement():
 
@@ -320,9 +317,9 @@ Context:
 
             return f"Error: {str(e)}"
 
-    # ======================================
+    
     # LANGGRAPH STATE
-    # ======================================
+    
 
     class State(TypedDict):
 
@@ -333,9 +330,9 @@ Context:
         summary: str
         judgement: str
 
-    # ======================================
+    
     # GRAPH
-    # ======================================
+    
 
     graph = StateGraph(State)
 
@@ -395,9 +392,9 @@ Context:
         }
     )
 
-    # ======================================
+    
     # GRAPH FLOW
-    # ======================================
+    
 
     graph.set_entry_point("ipc")
 
@@ -409,17 +406,17 @@ Context:
 
     graph.set_finish_point("judgement")
 
-    # ======================================
+    
     # COMPILE GRAPH
-    # ======================================
+    
 
     app = graph.compile()
 
     result = app.invoke({})
 
-    # ======================================
+    
     # FINAL OUTPUT
-    # ======================================
+    
 
     final_output = {
         "ipc_sections":
