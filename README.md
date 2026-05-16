@@ -6,27 +6,27 @@
 
 🚀 Features
 
-  📄 Upload legal PDF documents
+    📄 Upload legal PDF documents
+    
+    🧠 Extract structured legal information:
+    
+              IPC Sections
+              
+              Incident description
+              
+              Victim details
+              
+              Place of occurrence
   
-  🧠 Extract structured legal information:
-  
-            IPC Sections
-            
-            Incident description
-            
-            Victim details
-            
-            Place of occurrence
-
-            Judgment details
-            
-  📚 Automatic case summarization
-  
-  ⚖️ AI-generated judgement reasoning
-  
-  🔍 RAG-based context retrieval for accuracy
-  
-  ⚡ Reranking for improved semantic search quality
+              Judgment details
+              
+    📚 Automatic case summarization
+    
+    ⚖️ AI-generated judgement reasoning
+    
+    🔍 RAG-based context retrieval for accuracy
+    
+    ⚡ Reranking for improved semantic search quality
   
 🧠 Tech Stack
 
